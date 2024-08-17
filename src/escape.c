@@ -62,6 +62,10 @@ public boolean_t DecodeEscape( state_t *state )
 	break;
     } while( 'm' != ch );
 
+    if( 'K' == ch ){
+      return TRUE;
+    }
+
     SIDX = index;
 
     if( 'm' != ch ){

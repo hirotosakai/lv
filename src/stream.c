@@ -41,7 +41,8 @@
 #include <begin.h>
 #include "stream.h"
 
-private byte *gz_filter = "zcat";
+private byte *z_filter = "zcat";
+private byte *gz_filter = "gzcat";
 private byte *bz2_filter = "bzcat";
 private byte *lzma_filter = "lzcat";
 private byte *xz_filter = "xzcat";
@@ -73,8 +74,9 @@ public stream_t *StreamOpen( byte *file )
   st = StreamAlloc();
 
   if( NULL != (exts = Exts( file )) ){
-    if( !strcmp( "gz", exts ) || !strcmp( "GZ", exts )
-	|| !strcmp( "z", exts ) || !strcmp( "Z", exts ) )
+    if( !strcmp( "z", exts ) || !strcmp( "Z", exts ) )
+      filter = z_filter;
+    else if( !strcmp( "gz", exts ) || !strcmp( "GZ", exts ) )
       filter = gz_filter;
     else if( !strcmp( "bz2", exts ) || !strcmp( "BZ2", exts ) )
       filter = bz2_filter;
