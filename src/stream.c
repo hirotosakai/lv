@@ -43,6 +43,9 @@
 
 private byte *gz_filter = "zcat";
 private byte *bz2_filter = "bzcat";
+private byte *lzma_filter = "lzcat";
+private byte *xz_filter = "xzcat";
+private byte *zstd_filter = "zstdcat";
 
 private stream_t *StreamAlloc()
 {
@@ -75,10 +78,16 @@ public stream_t *StreamOpen( byte *file )
       filter = gz_filter;
     else if( !strcmp( "bz2", exts ) || !strcmp( "BZ2", exts ) )
       filter = bz2_filter;
+    else if ( !strcmp( "lzma", exts ) )
+      filter = lzma_filter;
+    else if ( !strcmp( "xz", exts ) )
+      filter = xz_filter;
+    else if ( !strcmp( "zst", exts ) )
+      filter = zstd_filter;
   }
   if( NULL != filter ){
     /*
-     * zcat or bzcat
+     * zcat, bzcat etc.
      */
     if( NULL == (st->fp = (FILE *)tmpfile()) )
       perror( "temporary file" ), exit( -1 );

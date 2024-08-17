@@ -5,23 +5,25 @@ lv \- a Powerful Multilingual File Viewer / Grep
 .B lv, lgrep
 .br
 .B lv
--h
+\-h
 .br
 .B lv
--V
+\-V
 .br
 .B lv
-[-[+]acdfgiklmnqsuvz]
+[\-acdfgiklmnqsuvz] [+acdfgiklmnqsuvz]
 .br
-     [-A\fIcoding-system\fP] [-I\fIcoding-system\fP] [-K\fIcoding-system\fP]
+     [\-A\fIcoding-system\fP] [\-I\fIcoding-system\fP] [\-K\fIcoding-system\fP]
 .br
-     [-O\fIcoding-system\fP] [-P\fIcoding-system\fP] [-D\fIcoding-system\fP]
+     [\-O\fIcoding-system\fP] [\-P\fIcoding-system\fP] [\-D\fIcoding-system\fP]
 .br
-     [-Ss\fIseq\fP] [-Sr\fIseq\fP] [-Sb\fIseq\fP] [-Su\fIseq\fP] [-Sh\fIseq\fP]
+     [\-Ss\fIseq\fP] [\-Sr\fIseq\fP] [\-Sb\fIseq\fP] [\-Su\fIseq\fP] [\-Sh\fIseq\fP]
 .br
-     [-T\fInumber\fP] [-W\fIwidth\fP] [-H\fIheight\fP] [-E'\fIeditor'\fP] [-+]
+     [\-T\fInumber\fP] [\-W\fIwidth\fP] [\-H\fIheight\fP] [\-E'\fIeditor'\fP] [\-+]
 .br
-     [-] (\fIgrep pattern\fP) [\fIfiles ...\fP]
+     [+\fInumber\fP] [+/\fIgrep-pattern\fP]
+.br
+     [-] (\fIgrep-pattern\fP) [\fIfiles ...\fP]
 .SH DESCRIPTION
 .IP "\fIMultilingual file viewer\fP"
 \fIlv\fP is a powerful multilingual file viewer.
@@ -45,7 +47,7 @@ lv can be used not only as a file viewer
 but also as a coding-system translation filter
 like \fInkf\fP (1) and \fItcs\fP (1).
 .IP "\fIMultilingual regular expressions / Multilingual grep\fP"
-lv can recognize multi-bytes patterns as regular expressions,
+lv can recognize multi-byte patterns as regular expressions,
 and lv also provides multilingual \fIgrep\fP (1) functionality
 by giving it another name, \fIlgrep\fP.
 Pattern matching is conducted in the charset level,
@@ -118,15 +120,15 @@ h: HZ
 .br
 r: raw mode
 .IP "Examples:"
--Il2: input coding system is iso-8859-2
+\-Il2: input coding system is iso-8859-2
 .br
--Ks:  keyboard coding system is shift-jis
+\-Ks:  keyboard coding system is shift-jis
 .br
--Oek: output coding system is euc-korea
+\-Oek: output coding system is euc-korea
 .br
--Ab:  all coding systems are big5
+\-Ab:  all coding systems are big5
 .IP "Coding-system translations / Code-points conversions:"
-iso-2022-cn, -jp, -kr can be converted into euc-china or -taiwan,
+iso-2022-cn, \-jp, \-kr can be converted into euc-china or \-taiwan,
 euc-japan, euc-korea, respectively (and vice versa).
 shift-jis uses the same internal code-points
 as iso-2022-jp and euc-japan.
@@ -151,7 +153,7 @@ Screen width
 .IP "-H<\fInumber\fP>"
 Screen height
 .IP "-E'<\fIeditor\fP>' (default 'vi -c %d')"
-Editor name (default 'vi -c %d')
+Editor name (default 'vi \-c %d')
 .br
 ``%d'' means the line number of current position in a file.
 .IP "-q"
@@ -201,7 +203,7 @@ Convert X0201 Katakana to X0208 while decoding
 Allow physical lines of each logical line printed on the screen
 to be concatenated for cut and paste after screen refresh
 .IP "-s"
-Force old pages to be swept out from the screen Smoothly
+Force old pages to be swept out from the screen smoothly
 .IP "-u"
 Unify several character sets, eg. JIS X0208 and C6226.
 In addition, lv equates ISO 646 variants,
@@ -223,15 +225,19 @@ You can also turn OFF specified options,
 using ``+<option>'' like +c, +d, ... +z.
 .IP "-"
 Treat the following arguments as filenames
-.IP "\fIgrep pattern\fP"
+.IP "\fIgrep-pattern\fP"
 lv works like \fIgrep\fP (1) when its name is \fIlgrep\fP
+.IP "+\fInumber\fP"
+Jump to the specified line immediately when lv is invoked.
+.IP "+/\fIgrep-pattern\fP"
+Search  the specified pattern immediately when lv is invoked.
 .IP "-V"
 Show lv version
 .IP "-h"
 Show this help
 .SH "CONFIGURATION"
 Options can be described in configuration file ``.lv'' (``_lv'' on MSDOS)
-located at you HOME directory.  If and only if you use MSDOS, you can locate
+located in your HOME directory.  If and only if you use MSDOS, you can locate
 ``_lv'' at current working directory.
 They can be also described in the environment variable LV.
 Every configuration will be overloaded in this order if there is. Command line
@@ -285,7 +291,7 @@ Toggle input coding systems reversely
 .IP "C-t:"
 Toggle HZ decoding mode
 .IP "v:"
-Launch the editor defined by option -E
+Launch the editor defined by option \-E
 .IP "C-g, =:"
 Show file information (filename, position, coding system)
 .IP "V:"
