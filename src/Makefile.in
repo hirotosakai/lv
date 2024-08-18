@@ -4,7 +4,7 @@
 ########################################################################
 
 @SET_MAKE@
-VERSION= 451
+VERSION= 4.51.b
 
 srcdir=	@srcdir@
 VPATH=	@srcdir@
@@ -16,7 +16,7 @@ libdir=	@libdir@
 mandir=	@mandir@
 
 lvlibdir=	$(libdir)/lv
-distdir = lv$(VERSION)
+distdir = lv-$(VERSION)
 
 DESTDIR=
 BINPERMS= 0755
@@ -94,22 +94,26 @@ uninstall::
 # the following rules are just for maintainer
 
 dist::
-	if [ -f ../$(distdir).tar.gz ]; then rm ../$(distdir).tar.gz ; fi
-	cd ../.. ; \
-	tar cvf $(distdir)/$(distdir).tar \
-		$(distdir)/README $(distdir)/GPL.txt \
-		$(distdir)/index.html $(distdir)/relnote.html \
-		$(distdir)/lv.1 $(distdir)/lv.hlp \
-		$(distdir)/hello.sample $(distdir)/hello.sample.gif \
-		$(distdir)/build/README \
-		$(distdir)/src/configure $(distdir)/src/configure.in \
-		$(distdir)/src/install-sh \
-		$(distdir)/src/config.sub $(distdir)/src/config.guess \
-		$(distdir)/src/Makefile.in $(distdir)/src/Makefile.dos \
-		$(distdir)/src/*.h $(distdir)/src/*.c \
-		$(distdir)/src/*.map $(distdir)/src/*.rev \
-		$(distdir)/src/*.pl $(distdir)/src/*.sh
-	gzip ../$(distdir).tar
+	if test -d $(distdir); then \
+	    rm -rf $(distdir); \
+	fi
+	mkdir -p $(distdir)
+	cd .. ; \
+	tar cvf - \
+		README LICENSE.txt \
+		index.html relnote.html \
+		lv.1 lv.hlp \
+		hello.sample hello.sample.gif \
+		build/README \
+		src/configure src/configure.in \
+		src/install-sh \
+		src/config.sub src/config.guess \
+		src/Makefile.in src/Makefile.dos \
+		src/*.h src/*.c \
+		src/*.map src/*.rev \
+		src/*.pl src/*.sh \
+		| (cd build/$(distdir) ; tar xf -)
+	tar cf - $(distdir) | gzip -c > $(distdir).tar.gz
 
 #
 # big5-cns map files
